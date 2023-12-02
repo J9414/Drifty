@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 
 import static Enums.Program.YT_DLP;
 
-public class Environment {
+public final class Environment {
     private static MessageBroker msgBroker = Environment.getMessageBroker();
 
     /*
@@ -74,6 +74,7 @@ public class Environment {
             msgBroker.msgInitError("Component (yt-dlp) update process was interrupted! " + e.getMessage());
         }
     }
+
     public static boolean isYtDLPUpdated() {
         final long oneDay = 1000 * 60 * 60 * 24; // Value of one day (24 Hours) in milliseconds
         long timeSinceLastUpdate = System.currentTimeMillis() - AppSettings.GET.lastDLPUpdateTime();
@@ -82,5 +83,8 @@ public class Environment {
 
     public static MessageBroker getMessageBroker() {
         return msgBroker;
+    }
+
+    private Environment() {
     }
 }

@@ -49,6 +49,7 @@ public final class Utility {
         String pattern = "(https?://(?:www\\.)?instagr(am|.am)?(\\.com)?/(p|reel)/([^/?#&]+)).*";
         return url.matches(pattern);
     }
+
     public static boolean isSpotify(String url) {
         String pattern = "(https?://(open.spotify\\.com|play\\.spotify\\.com)/(track|album|playlist)/[a-zA-Z0-9]+).*";
         return url.matches(pattern);
@@ -150,9 +151,9 @@ public final class Utility {
 
     public boolean yesNoValidation(String input, String printMessage) {
         while (input.isEmpty()) {
-            System.out.println(ENTER_Y_OR_N);
+            Environment.getMessageBroker().msgInputError(ENTER_Y_OR_N, true);
             M.msgLogError(ENTER_Y_OR_N);
-            System.out.print(printMessage);
+            Environment.getMessageBroker().msgInputInfo(printMessage, false);
             input = SC.nextLine().toLowerCase();
         }
         char choice = input.charAt(0);
@@ -161,9 +162,9 @@ public final class Utility {
         } else if (choice == 'n') {
             return false;
         } else {
-            System.out.println("Invalid input!");
+            Environment.getMessageBroker().msgInputError("Invalid input!", true);
             M.msgLogError("Invalid input!");
-            System.out.print(printMessage);
+            Environment.getMessageBroker().msgInputInfo(printMessage, false);
             input = SC.nextLine().toLowerCase();
             yesNoValidation(input, printMessage);
         }
@@ -182,7 +183,7 @@ public final class Utility {
                 return null;
             }
             Thread linkThread;
-            if (isSpotify(link)){
+            if (isSpotify(link)) {
                 linkThread = new Thread(spotdlJsonData(Program.getSpotdlDataPath().toFile().getAbsolutePath(), link));
             } else {
                 linkThread = new Thread(ytDLPJsonData(driftyJsonFolder.getAbsolutePath(), link));
@@ -190,7 +191,8 @@ public final class Utility {
             try {
                 linkThread.start();
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                M.msgLinkError("Failed to start thread to get link metadata! " + e.getMessage());
+                return null;
             }
             while (!linkThread.getState().equals(Thread.State.TERMINATED) && !linkThread.isInterrupted()) {
                 sleep(100);
@@ -294,6 +296,8 @@ public final class Utility {
                         } else if (line.contains("The playlist does not exist")) {
                             M.msgLinkError("The YouTube playlist does not exist or is private!");
                             break;
+                        } else if (line.contains("Video unavailable")) {
+                            M.msgLinkError("The YouTube video is unavailable!");
                         } else {
                             M.msgLinkError("Failed to retrieve filename!");
                         }
@@ -316,6 +320,7 @@ public final class Utility {
                     .run();
         };
     }
+
     public static boolean isURL(String text) {
         String regex = "^(http(s)?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
         Pattern p = Pattern.compile(regex);
@@ -342,7 +347,7 @@ public final class Utility {
         return sb.toString();
     }
 
-    public static String getSpotifyDownloadLink(String link){
+    public static String getSpotifyDownloadLink(String link) {
         M.msgDownloadInfo("Trying to get download link for \"" + link + "\"");
         // Remove si parameter from the link
         link = link.replaceAll("\\?si=.*", "");
