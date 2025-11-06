@@ -3,42 +3,41 @@ name: Format
 on:
   push:
     paths-ignore:
-      - "Website/**"
-      - "*.md"
       - "*.txt"
-      - "qodana.yaml"
   pull_request:
     paths-ignore:
-      - "Website/**"
-      - "*.md"
       - "*.txt"
-      - "qodana.yaml"
   workflow_dispatch:
 
 jobs:
   formatting:
-    name: Format Java files
+    name: Format files
     runs-on: ubuntu-latest
-    permissions: write-all
+    permissions:
+      contents: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-      - name: Setup JDK 20
-        uses: actions/setup-java@v4
+      - name: Setup JDK 23
+        uses: actions/setup-java@v5
         with:
           distribution: 'oracle'
-          java-version: 20.0.1
+          java-version: 23
       - name: Format Java files
         run: mvn rewrite:run
+      - name: Install prettier
+        run: npm install -g --save-dev --save-exact prettier
+      - name: Format the rest of the files
+        run: prettier . --write
       - name: Commit changes
         run: |
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           git add .
           if [[ $(git status --porcelain) ]]; then
-             git commit -m "style: Formatted Java files"
+             git commit -m "style: format codebase"
           fi
       - name: Push changes
         if: github.event_name != 'pull_request'

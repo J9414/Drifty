@@ -1,11 +1,12 @@
-version: '3.9'
-
 services:
-
   base:
     build:
       context: .
       dockerfile: ./Docker/dev/commons/base/Dockerfile
+      args:
+        - GRAALVM_VERSION_MAJOR=23
+        - MAVEN_MAJOR=3
+        - MAVEN_VERSION=3.8.8
     container_name: drifty-base
 
   runner:
@@ -13,9 +14,9 @@ services:
       context: .
       dockerfile: ./Docker/dev/commons/runner/Dockerfile
     container_name: drifty-runner
-  
+
   cli:
-    depends_on: 
+    depends_on:
       - base
     build:
       context: .
@@ -24,8 +25,9 @@ services:
     volumes:
       - ${DOWNLOAD_FOLDER:-.}:/root/Downloads
       - ./.drifty:/root/.drifty
+
   gui:
-    depends_on: 
+    depends_on:
       - base
       - runner
     build:

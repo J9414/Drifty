@@ -1,26 +1,43 @@
 "Website 🌐":
-- Website/**
+  - changed-files:
+      - any-glob-to-any-file: ["Website/**"]
 
 "App 💻":
-- src/**
+  - changed-files:
+      - any-glob-to-any-file: ["CLI/src/**", "GUI/src/**", "Core/src/*"]
 
-Workflows:
-- .github/workflows/**
+"CI/CD 🔁":
+  - changed-files:
+      - any-glob-to-any-file: [".github/workflows/**"]
 
 "dependencies 📦️":
-- Website/package.json
-- Website/package-lock.json
-- pom.xml
+  - changed-files:
+      - any-glob-to-any-file:
+          [
+            "Website/package.json",
+            "Website/package-lock.json",
+            "pom.xml",
+            ".github/workflows/**",
+            "CLI/pom.xml",
+            "GUI/pom.xml",
+            "Core/pom.xml",
+          ]
+  - head-branch: ["^dependabot"]
 
 "documentation 📝":
-- '**/*.md'
+  - changed-files:
+      - any-glob-to-any-file: ["**/*.md"]
 
 "maven 📦️":
-- pom.xml
+  - changed-files:
+      - any-glob-to-any-file:
+          ["pom.xml", "CLI/pom.xml", "GUI/pom.xml", "Core/pom.xml"]
 
 "npm 📦️":
-- Website/package.json
-- Website/package-lock.json
+  - changed-files:
+      - any-glob-to-any-file:
+          ["Website/package.json", "Website/package-lock.json"]
 
 "docker 🐋":
-- Docker/**
+  - changed-files:
+      - any-glob-to-any-file: ["Docker/**", "docker-compose.yml"]

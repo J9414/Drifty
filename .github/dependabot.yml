@@ -5,42 +5,73 @@
 
 version: 2
 updates:
-  - package-ecosystem: 'npm' # See documentation for possible values
-    directory: '/Website' # Location of package manifests
+  - package-ecosystem: "npm"
+    directory: "/Website" # Location of package manifests
     schedule:
-      interval: 'daily'
+      interval: "daily"
+    groups:
+      next-tailwindcss-types-node-eslint-dependencies:
+        patterns:
+          - "@next*"
+          - "next*"
+          - "@eslint-config-next*"
+          - "eslint-config-next*"
+          - "tailwindcss*"
+          - "@tailwindcss/postcss*"
+          - "@types/node*"
+      react-dependencies:
+        patterns:
+          - "@react*"
+          - "react*"
+          - "@react-dom*"
+          - "react-dom*"
     commit-message:
-      prefix: '[npm] '
-      include: 'scope'
+      prefix: "chore(npm)"
     labels:
-      - 'dependencies 📦️'
-      - 'npm 📦️'
-    reviewers:
-      - SaptarshiSarkar12
-      
-  - package-ecosystem: 'maven' # See documentation for possible values
-    directory: '/' # Location of package manifests
+      - "dependencies 📦️"
+      - "npm 📦️"
+
+  - package-ecosystem: "maven"
+    directory: "/" # Location of package manifests
     schedule:
-      interval: 'daily'
+      interval: "daily"
+    groups:
+      openrewrite-dependencies:
+        patterns:
+          - "org.openrewrite*"
+      javafx-dependencies:
+        patterns:
+          - "org.openjfx*"
     commit-message:
-      prefix: '[maven] '
-      include: 'scope'
+      prefix: "chore(maven)"
     labels:
-      - 'dependencies 📦️'
-      - 'maven 📦️'
-    reviewers:
-      - SaptarshiSarkar12
-      
-  - package-ecosystem: 'github-actions'
-    directory: '/'
+      - "dependencies 📦️"
+      - "maven 📦️"
+
+  - package-ecosystem: "github-actions"
+    directory: "/.github/workflows"
     schedule:
       # Check for updates to GitHub Actions every weekday
-      interval: 'daily'
+      interval: "daily"
     commit-message:
-      prefix: '[ci] '
-      include: 'scope'
+      prefix: "chore(ci)"
     labels:
-      - 'dependencies 📦️'
-      - 'Workflows'
-    reviewers:
-      - SaptarshiSarkar12
+      - "dependencies 📦️"
+      - "CI/CD 🔁"
+
+  - package-ecosystem: "docker"
+    directories:
+      - "/Docker/dev/CLI"
+      - "/Docker/dev/GUI"
+      - "/Docker/dev/commons/base"
+      - "/Docker/dev/commons/runner"
+      - "/Docker/prod/CLI"
+      - "/Docker/prod/GUI"
+    schedule:
+      # Check for updates to Docker every day
+      interval: "daily"
+    commit-message:
+      prefix: "chore(docker)"
+    labels:
+      - "dependencies 📦️"
+      - "docker 🐋"

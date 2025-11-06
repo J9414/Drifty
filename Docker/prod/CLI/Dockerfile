@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 python:3.11-slim as runner
+FROM --platform=linux/amd64 oraclelinux:10-slim
 
 WORKDIR /app
 COPY . .

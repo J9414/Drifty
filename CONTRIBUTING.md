@@ -19,9 +19,10 @@ Be sure to include as much detail as possible including step-by-step description
 ### Issues
 
 [**Issues**](https://github.com/SaptarshiSarkar12/Drifty/issues/new/choose) are very valuable to this project. Please check if any similar issues are already present. If not, then feel free to open that issue.
-  - **Feature 💡 Requests** are valuable sources of enhancements which the project can make.
-  - **Bug 🐞 Reports** show where this project is lacking and errors come up.
-  - With a **question**, you show where contributors can improve the user experience.
+
+- **Feature 💡 Requests** are valuable sources of enhancements which the project can make.
+- **Bug 🐞 Reports** show where this project is lacking and errors come up.
+- With a **question**, you show where contributors can improve the user experience.
 
 ### Projects
 
@@ -30,6 +31,8 @@ Be sure to include as much detail as possible including step-by-step description
 ### Pull Requests
 
 [**Pull requests**](https://github.com/SaptarshiSarkar12/Drifty/pulls) are a great way to get your ideas (through code changes) into this project. Please open an issue at first, describing the changes you want to make, then feel free to open a PR (Pull Request).
+
+Before opening a pull request, please ensure that **each commit is signed off** using the **Developer Certificate of Origin (DCO)** (i.e., by using the `-s` or `--signoff` flag with `-S` or `--gpg-sign`). This confirms that _**you have the rights to contribute the code under the project's licensing terms**_. For more information, please see [**GitHub's guide on commit signoffs**](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits).
 
 #### Does it state intent?
 
@@ -41,6 +44,9 @@ For example:
 
 Does not tell me anything about why you're doing that
 
-> Add files to make the app more user-friendly
+> feat: Add files to make the app more user-friendly
 
 Tells me the problem that you have found, and the pull request shows me the action you have taken to solve it.
+
+The use of [**conventional commits**](https://www.conventionalcommits.org/en/v1.0.0/) is recommended. It is a part of Git Best practices.
+You can check some examples of commits [here](https://www.conventionalcommits.org/en/v1.0.0/#examples).

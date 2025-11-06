@@ -1,9 +1,10 @@
-FROM --platform=linux/amd64 python:3.11-slim as runner
+FROM --platform=linux/amd64 oraclelinux:10-slim
 
 WORKDIR /app
 COPY . .
-RUN apt-get update --no-install-recommends && apt-get install ffmpeg libsm6 libxext6 libgtk-3-0 -y --no-install-recommends
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN microdnf upgrade -y --nodocs && \
+    microdnf install libSM-1.2.4 libXext-1.3.6 gtk3-3.24.43 -y --nodocs && \
+    microdnf clean all
 RUN chmod +x ./Drifty_GUI
 
 CMD [ "/app/Drifty_GUI" ]
